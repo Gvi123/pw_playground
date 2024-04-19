@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import config from "../config/config.js";
-import user_data from "../test_data/user.json";
+import user_data from "../test_data/user.js";
 
 class login {
   static async navigateTo(page) {
