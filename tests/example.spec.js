@@ -4,8 +4,8 @@ import login from "../pageObjects/login-page";
 
 test("Register User", async ({ page }) => {
   await login.navigateTo(page);
-  await login.SignupButton(page);
-  await login.newUserForm(page);
-  await login.newUserFinalForm(page);
-  await login.newUserSignedIn(page);
+  await login.clickSignUpButton(page);
+  await login.newUserCredentials(page);
+  await login.newUserAccountInformation(page);
+  await login.checkIfNewUserIsCreated(page);
 });
