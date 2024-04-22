@@ -1,6 +1,11 @@
 // @ts-check
-const { test, expect } = require("@playwright/test");
+import { test, expect } from "@playwright/test";
+import login from "../pageObjects/login-page";
 
-test("Sign in", async ({ page }) => {
-  await page.goto("https://www.automationexercise.com/");
+test("Register User", async ({ page }) => {
+  await login.navigateTo(page);
+  await login.clickSignUpButton(page);
+  await login.newUserCredentials(page);
+  await login.newUserAccountInformation(page);
+  await login.checkIfNewUserIsCreated(page);
 });
