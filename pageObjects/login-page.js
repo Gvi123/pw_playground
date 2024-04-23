@@ -14,20 +14,20 @@ class login {
     ).toBeVisible();
   }
 
-  static async newUserCredentials(page) {
-    await page.getByPlaceholder("Name").fill(config.USER_NAME);
+  static async RegisterNewUserCredentials(page, name, email) {
+    await page.getByPlaceholder("Name").fill(name);
     await page
       .locator("form")
       .filter({ hasText: "Signup" })
       .getByPlaceholder("Email Address")
-      .fill(config.LOGIN_EMAIL);
+      .fill(email);
     await page.getByRole("button", { name: "Signup" }).click();
-    await expect(page.locator("#form")).toContainText(
-      "Enter Account Information"
-    );
   }
 
   static async newUserAccountInformation(page) {
+    await expect(page.locator("#form")).toContainText(
+      "Enter Account Information"
+    );
     await page.getByLabel("Mr.").check();
     await page.getByLabel("Password *").fill(config.PASSWORD);
     await page.locator("#days").selectOption("1");
@@ -49,13 +49,30 @@ class login {
     await page.getByLabel("Mobile Number *").fill(user_data.mobile_number);
     await page.getByRole("button", { name: "Create Account" }).click();
     await expect(page.locator("b")).toContainText("Account Created!");
+    await page.getByRole("link", { name: "Continue" }).click();
   }
 
-  static async checkIfNewUserIsCreated(page) {
-    await page.getByRole("link", { name: "Continue" }).click();
-    await expect(page.locator("#header")).toContainText(
-      `Logged in as ${config.USER_NAME}`
-    );
+  static async correctUserLoggedIn(page, name) {
+    await expect(page.locator("#header")).toContainText(`Logged in as ${name}`);
+  }
+
+  static async UserCredentials(page, email, password) {
+    await page
+      .locator("form")
+      .filter({ hasText: "Login" })
+      .getByPlaceholder("Email Address")
+      .fill(email);
+    await page.getByPlaceholder("Password").fill(password);
+    await page.getByRole("button", { name: "Login" }).click();
+  }
+
+  static async errorMessageAfterInccorectCredentials(page, errorMessage) {
+    await expect(page.locator("#form")).toContainText(errorMessage);
+  }
+
+  static async logout(page) {
+    await page.getByRole("link", { name: " Logout" }).click();
+    await expect(page.getByRole("list")).toContainText("Signup / Login");
   }
 }
 
